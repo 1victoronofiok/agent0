@@ -5,7 +5,8 @@ Probably another openAI wrapper but it can help you find a girlfriend or even be
 ### Run this b!***
 
 Make sure you have an openai key within the env in which you run cmd below.
-Also, you gotta pay Sam Altman a few bucks, else your key is irrelevant (like $2 should do)
+Also, you gotta pay Sam Altman a few bucks, else your key is just as irrelevant as your opinions (like $2 should do)
+Well, furthermore! have an API key from serper api for search functionality. I think that's it.
 ```go
 go run . -prompt="where can I get huge bottles of baby oil?"
 ```

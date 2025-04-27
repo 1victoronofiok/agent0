@@ -148,7 +148,7 @@ func RunAgent0(c *openai.Client, uq string, agentFuncs AgentFunctions) (string, 
 				fmt.Printf("\n Tool Call Number: %d, function name %s, \n Args %s", idx+1, fnName, tc.Function.Arguments)
 
 				switch fn := agentFuncs[fnName].(type) {
-				case func(string, int) []SearchResponse:
+				case func(string, int) ([]SearchResponse, error):
 					var args struct {
 						Query string `json:"query"`
 						Limit int    `json:"limit,omitempty"`
@@ -157,7 +157,11 @@ func RunAgent0(c *openai.Client, uq string, agentFuncs AgentFunctions) (string, 
 					if err != nil {
 						fmt.Printf("\n error unmarshalling args: %s", err.Error())
 					}
-					sr := fn(args.Query, 3)
+					sr, err := fn(args.Query, 3)
+					if err != nil {
+						fmt.Printf("search tool error - %s", err.Error())
+						// do stuff
+					}
 					fmt.Printf("\n search results: \n %v", sr)
 
 					b, err := json.Marshal(sr)
