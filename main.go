@@ -240,6 +240,14 @@ func main() {
 
 	fmt.Printf("\n functions map %v", af)
 
+	// res, err := Search("best bread and beans in lagos, nigeria", 10)
+
+	// if err != nil {
+	// 	fmt.Printf("\n %s", err.Error())
+	// }
+
+	// fmt.Print(res)
+
 	// will retrieve key from my env
 	client := openai.NewClient(openai.DefaultClientOptions()...)
 	response, err := RunAgent0(&client, p, af)

@@ -42,10 +42,25 @@ func Search(prompt string, limit int) ([]SearchResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	var sr []SearchResponse
-	err = json.Unmarshal(body, &sr)
+	// fmt.Print(string(body))
+	var r struct {
+		Data []struct {
+			Title string `json:"title"`
+			Link  string `json:"link"`
+		} `json:"organic"`
+	}
+	err = json.Unmarshal(body, &r)
 	if err != nil {
 		return nil, err
+	}
+
+	sr := make([]SearchResponse, 0)
+	// slice to limit to reduce the number of results therefore token usage
+	for _, d := range r.Data[:limit] {
+		sr = append(sr, SearchResponse{
+			Title: d.Title,
+			URL:   d.Link,
+		})
 	}
 
 	return sr, nil
